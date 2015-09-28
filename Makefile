@@ -64,6 +64,18 @@ MAN_NL=httping-nl.1
 
 DOCS=license.txt license.OpenSSL readme.txt
 
+# CYGWIN_NT-6.1
+UNAME := $(shell uname -s | tr A-Z a-z)
+
+# CYGWIN
+OS := $(patsubst cygwin%,cygwin,$(UNAME))
+
+
+ifeq ($(OS),cygwin)
+    CCFLAGS += -std=gnu11 
+    LDFLAGS += -lintl
+endif
+
 ifeq ($(SSL),no)
 CFLAGS+=-DNO_SSL
 else
